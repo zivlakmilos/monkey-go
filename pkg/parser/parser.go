@@ -78,9 +78,6 @@ func (p *Parser) parseStatement() ast.Statement {
 		return p.parseLetStatement()
 	case token.RETURN:
 		return p.parseReturnStatement()
-	case token.SEMICOLON:
-		// TODO: Temporarly to fix failing tests
-		return nil
 	default:
 		return p.parseExpressionStatement()
 	}
@@ -100,7 +97,7 @@ func (p *Parser) parseLetStatement() *ast.LetStatement {
 	}
 
 	// TODO: Skip expressions for now
-	for p.curTokenIs(token.SEMICOLON) {
+	for !p.curTokenIs(token.SEMICOLON) {
 		p.nextToken()
 	}
 
